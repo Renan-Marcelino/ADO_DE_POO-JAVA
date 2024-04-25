@@ -5,6 +5,7 @@
 package com.mycompany.tela_poo;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,6 +14,7 @@ import javax.swing.JOptionPane;
 public class Tela_Cadastro extends javax.swing.JFrame {
 
     private Carrinho carrinho;
+
     /**
      * Creates new form Tela_Cadastro
      */
@@ -20,8 +22,7 @@ public class Tela_Cadastro extends javax.swing.JFrame {
         initComponents();
         int tamanhoCarrinho = Integer.parseInt(JOptionPane.showInputDialog("Digite o tamanho do carrinho"));
         carrinho = new Carrinho(tamanhoCarrinho);
-        
-        
+
     }
 
     /**
@@ -47,7 +48,9 @@ public class Tela_Cadastro extends javax.swing.JFrame {
         Carrinho = new javax.swing.JLabel();
         listaDados = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbt_Exibir = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        lbl_Total = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,6 +77,11 @@ public class Tela_Cadastro extends javax.swing.JFrame {
 
         Excluir.setText("Excluir");
         Excluir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExcluirActionPerformed(evt);
+            }
+        });
 
         Fechar_Carrinho.setText("Fechar Carrinho");
         Fechar_Carrinho.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -101,18 +109,25 @@ public class Tela_Cadastro extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbt_Exibir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tbt_Exibir.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Descrição", "Preço", "Quantidade"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tbt_Exibir);
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("TOTAL:");
+        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        lbl_Total.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lbl_Total.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbl_Total.setText("0    ");
+        lbl_Total.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,7 +159,11 @@ public class Tela_Cadastro extends javax.swing.JFrame {
                 .addGap(137, 137, 137))
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Carrinho)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -180,10 +199,14 @@ public class Tela_Cadastro extends javax.swing.JFrame {
                         .addGap(13, 13, 13)
                         .addComponent(listaDados, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(Fechar_Carrinho, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbl_Total, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(Fechar_Carrinho, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -195,28 +218,62 @@ public class Tela_Cadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_CodigoActionPerformed
 
     private void cadastraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastraActionPerformed
-        
+
+        System.out.println(txt_Codigo.getText() + " " + txt_Descricao.getText() + " " + txt_Preco.getText() + " " + txt_Quantidade.getText());
+        // Create a new row with product details
+        Object[] rowData = {
+            Integer.parseInt(txt_Codigo.getText()),
+            txt_Descricao.getText(),
+            Double.parseDouble(txt_Preco.getText()),
+            Integer.parseInt(txt_Quantidade.getText())
+        };
+
+        // Add the new row to the table model
         carrinho.incluirItemCarrinho(new Produto(Integer.parseInt(txt_Codigo.getText()),
                 txt_Descricao.getText(),
-                Double.parseDouble(txt_Preco.getText()), 
+                Double.parseDouble(txt_Preco.getText()),
                 Integer.parseInt(txt_Quantidade.getText())), 0);
-        
-        carrinho.exibirCarrinho();
+
         System.out.println("---------");
-     
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_cadastraActionPerformed
 
     private void Fechar_CarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Fechar_CarrinhoActionPerformed
-        // TODO add your handling code here:
+        Double total = carrinho.fecharCompra();
+        lbl_Total.setText(String.valueOf(total));
     }//GEN-LAST:event_Fechar_CarrinhoActionPerformed
 
     private void listaDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaDadosActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tbt_Exibir.getModel();
+        model.setRowCount(0);
+
+        // Retrieve cart items (implementation not shown)
+        //carrinho.exibirCarrinho();
+        // Add data for each item
+        Produto[] vetorProdutos = carrinho.getItens();
+        for (int i = 0; i < carrinho.getContador(); i++) {
+            Object[] rowData = {
+                vetorProdutos[i].getCodigo(),
+                vetorProdutos[i].getDescricao(),
+                vetorProdutos[i].getPreco(),
+                vetorProdutos[i].getQuantidade()
+            };
+            model.addRow(rowData);
+
+        }
+
+        // Show the table after populating
+        tbt_Exibir.setVisible(true);
     }//GEN-LAST:event_listaDadosActionPerformed
+
+    private void ExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirActionPerformed
+            DefaultTableModel model = (DefaultTableModel) tbt_Exibir.getModel();
+           // model.removeRow(selectedRow);
+           carrinho.setItens(new Produto[carrinho.getItens().length]);
+           carrinho.setContador(0);       
+
+    }//GEN-LAST:event_ExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,16 +289,24 @@ public class Tela_Cadastro extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Tela_Cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tela_Cadastro.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Tela_Cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tela_Cadastro.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Tela_Cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tela_Cadastro.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tela_Cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Tela_Cadastro.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -262,9 +327,11 @@ public class Tela_Cadastro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lbl_Total;
     private javax.swing.JButton listaDados;
+    private javax.swing.JTable tbt_Exibir;
     private javax.swing.JTextField txt_Codigo;
     private javax.swing.JTextField txt_Descricao;
     private javax.swing.JTextField txt_Preco;

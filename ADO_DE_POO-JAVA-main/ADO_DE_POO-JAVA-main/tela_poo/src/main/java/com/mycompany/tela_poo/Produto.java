@@ -41,6 +41,13 @@ public class Produto {
     public int getQuantidade() {
         return quantidade;
     }
+    
+    public String getDescricao() {
+        return descProduto;
+    }
+    
+    
+    
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
@@ -54,6 +61,8 @@ public class Produto {
     public String toString() {
         return "Produto{" + "codigo: " + codigo + ", descProduto: " + descProduto + ", preco: " + preco + ", quantidade: " + quantidade + '}';
     }
+
+    
     
     
     

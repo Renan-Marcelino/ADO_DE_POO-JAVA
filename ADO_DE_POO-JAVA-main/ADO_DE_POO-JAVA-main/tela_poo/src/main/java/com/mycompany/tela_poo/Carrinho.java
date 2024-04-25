@@ -34,6 +34,27 @@ public class Carrinho {
         return total;
     }
 
+    public Produto[] getItens() {
+        return itens;
+    }
+
+    public int getContador() {
+        return contador;
+    }
+
+    public void setContador(int contador) {
+        this.contador = contador;
+    }
+
+    
+    public void setItens(Produto[] itens) {
+        this.itens = itens;
+    }
+    
+    
+    
+    
+
     @Override
     public String toString() {
         return "Carrinho{" + "itens=" + itens + ", contador=" + contador + '}';
